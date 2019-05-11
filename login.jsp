@@ -1,24 +1,17 @@
-<%@ page import="java.util.*,java.io.*" pageEncoding="UTF-8"%>
-<!doctype html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-	<meta charset="UTF-8">
-	<title>欢迎登录</title>
+<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<title>留言板</title>
 </head>
 <body>
-	<form action="login.jsp" method="post">
-		<p>用户名：<input type="text" name="username" placeholder="Enter you name"></p>
-		<p>密码：<input type="password" name="password"></p>
-		<p><input type="submit" value="登录"></p>
-	</form>
-	
-<%
-	if(request.getParameter("username")!=null){
-	session.setAttribute("username",request.getParameter("username"));
-	session.setAttribute("car", new TreeMap<String,Integer>());
-	response.sendRedirect("index.jsp");
-	}
-	
-
- %>
+<form method = "POST" action = "logindo.jsp">
+用户名：<input type = "text" name = "username">
+密码：<input type = "password" name = "userpass">
+<input type = "submit" value= "登录">
+<input type = "reset"value = "重置">
+</form>
 </body>
 </html>
