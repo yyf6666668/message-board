@@ -1,17 +1,30 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=GBK">
-<title>留言板</title>
-</head>
-<body>
-<form method = "POST" action = "logindo.jsp">
-用户名：<input type = "text" name = "username">
-密码：<input type = "password" name = "userpass">
-<input type = "submit" value= "登录">
-<input type = "reset"value = "重置">
-</form>
-</body>
-</html>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ page import="java.util.*"%>
+<%@ page import="com.wgh.model.UserInfo"%>
+<%@ page import="com.wgh.servlet.UserListener"%>
+<%
+
+String username=request.getParameter("username");	
+UserInfo user=UserInfo.getInstance();	
+session.setMaxInactiveInterval(600);		
+Vector vector=user.getList();
+boolean flag=true;	
+if(vector!=null&&vector.size()>0){
+	for(int i=0;i<vector.size();i++){
+		if(user.equals(vector.elementAt(i))){
+			out.println("<script language='javascript'>alert('该用户已经登录');window.location.href='index.jsp';</script>");
+			flag=false;
+			break;
+		}
+	}
+}
+if(flag){
+	UserListener ul=new UserListener();
+	ul.setUser(username);
+	session.setAttribute("user",ul);
+	session.setAttribute("username",username);
+	user.addUser(ul.getUser());	
+	session.setAttribute("loginTime",new Date().toLocaleString());	
+	response.sendRedirect("Messages?action=loginRoom");
+}
+%>
